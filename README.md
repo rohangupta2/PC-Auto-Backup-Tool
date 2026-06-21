@@ -4,14 +4,14 @@ Welcome to the **Automated PC Backup Tool**! This is a college project designed 
 
 ---
 
-### 📥 Download the Software (Cross-Platform)
+### 🕹️ Download the Software (Cross-Platform)
 Click on the buttons below to download the executable for your Operating System. No installation required!
 
-[![Windows](https://img.shields.io/badge/Download_for_Windows-AutoBackup.exe-blue?style=for-the-badge&logo=windows)](./AutoBackup.exe)
+<a href="https://github.com/rohangupta2/PC-Auto-Backup-Tool/blob/main/extractFiles-win.exe"><img src="https://img.shields.io/badge/DOWNLOAD_FOR_WINDOWS-extractFiles--win.exe-blue?style=for-the-badge&logo=windows" /></a>
 
-[![Mac](https://img.shields.io/badge/Download_for_Mac-extractFiles--macos-white?style=for-the-badge&logo=apple)](./extractFiles-macos)
+<a href="https://github.com/rohangupta2/PC-Auto-Backup-Tool/blob/main/extractFiles-macos"><img src="https://img.shields.io/badge/DOWNLOAD_FOR_MAC-extractFiles--macos-black?style=for-the-badge&logo=apple" /></a>
 
-[![Linux](https://img.shields.io/badge/Download_for_Linux-extractFiles--linux-yellow?style=for-the-badge&logo=linux)](./extractFiles-linux)
+<a href="https://github.com/rohangupta2/PC-Auto-Backup-Tool/blob/main/extractFiles-linux"><img src="https://img.shields.io/badge/DOWNLOAD_FOR_LINUX-extractFiles--linux-yellow?style=for-the-badge&logo=linux" /></a>
 
 ---
 
